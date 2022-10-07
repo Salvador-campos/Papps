@@ -1,21 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 //import { alignContent, flex, flexDirection, width } from 'styled-system';
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-import {initializeApp} from 'firebase/app'
-import { firebaseConfig } from '../db/firebase_config';
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from "../firebase_config";
 
 function Login() {
-    const navigation = useNavigation();
-    const [email, setEmail] = React.useState('')
-    const [Password, setPassword] = React.useState('')
+  const navigation = useNavigation();
 
-    const app = initializeApp(firebaseconfig);
-    const auth = getAuth(app);
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log("Inicio de sesión...");
+      const user = userCredential.user; 
+      //console.log(user);
+      navigation.navigate("Home");
+    })
+    .catch(error => {
+      //console.log(error);
+      Alert.alert(error.message);
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -46,7 +64,8 @@ function Login() {
               />
             }
             variant="outline"
-            placeholder="correo electrónico"
+            onChangeText={(text) => setEmail(text)}
+            placeholder="Nombre de usuario o correo electrónico"
             _light={{
               placeholderTextColor: "blueGray.400",
             }}
@@ -78,7 +97,8 @@ function Login() {
             }
             variant="outline"
             secureTextEntry={true}
-            placeholder="Contraseñas"
+            onChangeText={(text) => setPassword(text)}
+            placeholder="Contraseña"
             _light={{
               placeholderTextColor: "blueGray.400",
             }}
@@ -91,7 +111,7 @@ function Login() {
 
       {/* Button */}
       <View style={styles.buttonStyle}>
-        <Button style={styles.buttonDesign}>
+        <Button onPress={handleSignIn} style={styles.buttonDesign}>
             Ingresar
         </Button>
       </View>

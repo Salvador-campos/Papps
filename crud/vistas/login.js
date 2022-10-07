@@ -4,19 +4,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-//import { alignContent, flex, flexDirection, width } from 'styled-system';
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-import {initializeApp} from 'firebase/app'
-import { firebaseConfig } from '../db/firebase_config';
+import { alignContent, flex, flexDirection, width } from 'styled-system';
+
 
 function Login() {
     const navigation = useNavigation();
-    const [email, setEmail] = React.useState('')
-    const [Password, setPassword] = React.useState('')
-
-    const app = initializeApp(firebaseconfig);
-    const auth = getAuth(app);
-
   return (
     <View style={styles.container}>
       <View style={styles.Middle}>
@@ -46,7 +38,7 @@ function Login() {
               />
             }
             variant="outline"
-            placeholder="correo electrónico"
+            placeholder="Nombre de usuario o correo electrónico"
             _light={{
               placeholderTextColor: "blueGray.400",
             }}
@@ -272,3 +264,4 @@ const styles = StyleSheet.create({
     justifyContent:'space-around'
   },
 });
+    

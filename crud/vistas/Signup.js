@@ -2,29 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio } from 'native-base';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-//import { alignContent, flex, flexDirection, width } from 'styled-system';
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-import {initializeApp} from 'firebase/app'
-import { firebaseConfig } from '../db/firebase_config';
+import { alignContent, flex, flexDirection, width } from 'styled-system';
 
-function Login() {
-    const navigation = useNavigation();
-    const [email, setEmail] = React.useState('')
-    const [Password, setPassword] = React.useState('')
 
-    const app = initializeApp(firebaseconfig);
-    const auth = getAuth(app);
-
+function Signup() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.Middle}>
-        <Text style={styles.LoginText}>Inicio de sesión</Text>
+        <Text style={styles.LoginText}>Registro</Text>
       </View>
       <View style={styles.text2}>
-        <Text>¿No estás registrado? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Signup")} ><Text style={styles.signupText}> ¡Registrate!</Text></TouchableOpacity>
+        <Text>¿Ya tienes cuenta? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")} ><Text style={styles.signupText}> Inicia sesión </Text></TouchableOpacity>
       </View>
 
       {/* Username or Email Input Field */}
@@ -46,7 +38,38 @@ function Login() {
               />
             }
             variant="outline"
-            placeholder="correo electrónico"
+            placeholder="Nombre de usuario"
+            _light={{
+              placeholderTextColor: "blueGray.400",
+            }}
+            _dark={{
+              placeholderTextColor: "blueGray.50",
+            }}
+
+          />
+        </View>
+      </View>
+
+      {/* Username or Email Input Field */}
+      <View style={styles.buttonStyleX}>
+        
+        <View style={styles.emailInput}>
+          <Input
+            InputLeftElement={
+              <Icon
+                as={<MaterialCommunityIcons name="email" />}
+                size="sm"
+                m={2}
+                _light={{
+                  color: "black",
+                }}
+                _dark={{
+                  color: "gray.300",
+                }}
+              />
+            }
+            variant="outline"
+            placeholder="Correo electrónico"
             _light={{
               placeholderTextColor: "blueGray.400",
             }}
@@ -78,7 +101,38 @@ function Login() {
             }
             variant="outline"
             secureTextEntry={true}
-            placeholder="Contraseñas"
+            placeholder="Contraseña"
+            _light={{
+              placeholderTextColor: "blueGray.400",
+            }}
+            _dark={{
+              placeholderTextColor: "blueGray.50",
+            }}
+          />
+        </View>
+      </View>
+
+      {/* Password Input Field */}
+      <View style={styles.buttonStyleX}>
+        
+        <View style={styles.emailInput}>
+          <Input
+            InputLeftElement={
+              <Icon
+                as={<FontAwesome5 name="key" />}
+                size="sm"
+                m={2}
+                _light={{
+                  color: "black",
+                }}
+                _dark={{
+                  color: "gray.300",
+                }}
+              />
+            }
+            variant="outline"
+            secureTextEntry={true}
+            placeholder="Confirma contraseña"
             _light={{
               placeholderTextColor: "blueGray.400",
             }}
@@ -92,7 +146,7 @@ function Login() {
       {/* Button */}
       <View style={styles.buttonStyle}>
         <Button style={styles.buttonDesign}>
-            Ingresar
+            ¡Registrar ahora!
         </Button>
       </View>
 
@@ -108,7 +162,7 @@ function Login() {
       {/* Box */}
       <View style={styles.boxStyle}>
       <Box 
-        onPress={() => navigation.navigate("#")}  // for navigation 
+        onPress={() => navigation.navigate("#")}  // for navigation
         style={{height:80, width:80}} 
         shadow={3}
         _light={{
@@ -141,6 +195,7 @@ function Login() {
       >
         <AspectRatio ratio={1 / 1}>
           <Image
+            
             roundedTop="lg"
             source={{
               uri: "https://www.transparentpng.com/thumb/facebook-logo-png/photo-facebook-logo-png-hd-25.png",
@@ -203,11 +258,12 @@ export default () => {
   return (
     <NativeBaseProvider>
      
-        <Login />
+        <Signup />
       
     </NativeBaseProvider>
   )
 }
+
 
 const styles = StyleSheet.create({
   container: {
